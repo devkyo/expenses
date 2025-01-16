@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  output: 'standalone', // Necesario para Netlify
+  experimental: {
+    appDir: true, // Habilita el sistema `src/app`
+  },
+};
 
-export default nextConfig;
+module.exports = nextConfig;
