@@ -7,7 +7,8 @@ import { toast } from 'react-toastify';
 
 export const Table = () => {
 
-  const { items, fetchItems, total, deleteItem } = useItems()
+  const { items, fetchItems, deleteItem } = useItems()
+
 
   useEffect(() => {
     fetchItems();
@@ -23,7 +24,7 @@ export const Table = () => {
         body: JSON.stringify({ id })
       })
       const result = await res.json()
-      console.log(result);
+
       deleteItem(id)
       toast.success('Item eliminado')
     } catch (err) {
@@ -32,10 +33,8 @@ export const Table = () => {
   }
   return (
 
-    <div className="relative overflow-x-auto">
-      <div className="flex justify-center items-center">
-        <p className="text-xl font-bold p-5">TOTAL gastado S/{parseFloat(total.toFixed(2))}</p>
-      </div>
+    <div className="relative overflow-x-auto mt-8">
+    
 
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -66,7 +65,7 @@ export const Table = () => {
             items.map(item => (
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={item.id}>
                 <td className="px-6 py-4">
-                  {item.id}
+                  <div className="w-[20px] h-[20px]  rounded-[20px]" style={{backgroundColor: item.category.color}}></div>
                 </td>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {item.category.name}

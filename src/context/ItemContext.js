@@ -8,15 +8,8 @@ export const ItemProvider = ({ children }) => {
 
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([])
-  const [total, setTotal] = useState(0)
 
-  function sumPrices(items) {
-    return items.reduce((final, item) => {
-      const price = parseFloat(item.price)
-      const priceDecimal = parseFloat(price.toFixed(2))
-      return final + priceDecimal; // Suma el campo 'price' de cada objeto
-    }, 0);
-  }
+
 
   const fetchCategories = useCallback(async () => {
 
@@ -80,7 +73,7 @@ export const ItemProvider = ({ children }) => {
 
 
   return (
-    <ItemContext.Provider value={{ items, addItem, categories, fetchCategories, addCat, fetchItems, total, setTotal, deleteItem }}>
+    <ItemContext.Provider value={{ items, addItem, categories, fetchCategories, addCat, fetchItems, deleteItem }}>
       {children}
     </ItemContext.Provider>
   );

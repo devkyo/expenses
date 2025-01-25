@@ -15,6 +15,7 @@ datasource db {
 model Category {
   id Int @id @default(autoincrement())
   name String
+  color String?
   items Item[]
 }
 model Item {

@@ -8,7 +8,7 @@ const prisma = new PrismaClient()
 export async function GET(req) {
 
   try {
-    const items = await prisma.item.findMany({
+    const getItems = await prisma.item.findMany({
       include: {
         category: true
       },
@@ -16,6 +16,12 @@ export async function GET(req) {
         id: 'desc'
       }
     })
+
+    const items = getItems.map(item => ({
+      ...item,
+      price: parseFloat(item.price)  // Convertir el precio a número
+    }));
+    
 
     return new Response(
       JSON.stringify({ items }), {
@@ -41,11 +47,10 @@ export async function POST(req) {
     const dateTime = moment.tz('America/Lima').toDate();
     const { name, categoryId, price } = await req.json()
 
-    console.log(name, categoryId, price);
     const item = await prisma.item.create({
       data: {
         name,
-        price,
+        price: parseFloat(price),
         categoryId,
         created_at: dateTime
       },
@@ -53,8 +58,15 @@ export async function POST(req) {
         category: true
       }
     })
+
+    const processItem = {
+      ...item,
+      price: parseFloat(item.price) // Asegura que el campo 'price' sea un número flotante
+    };
+    
+
     return new Response(
-      JSON.stringify({ message: "Item created successfully", item }),
+      JSON.stringify({ message: "Item created successfully", item: processItem }),
       {
         status: 201,
         headers: {
@@ -72,7 +84,7 @@ export async function POST(req) {
       })
     )
   } finally {
-    await prisma.$disconnect(); // Desconecta Prisma después de la operación
+    await prisma.$disconnect()
   }
 }
 

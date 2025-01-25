@@ -27,13 +27,18 @@ export async function GET(req) {
 }
 
 
+
+
 export async function POST(req) {
 
   try {
-    const { name } = await req.json()
+    const { name, color } = await req.json()
+    console.log('post category');
+    console.log(color);
     const category = await prisma.category.create({
       data: {
-        name: name
+        name: name,
+        color: color
       }
     })
 
